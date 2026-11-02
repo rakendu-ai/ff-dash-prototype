@@ -1,0 +1,37 @@
+name: iOS prototype build
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Build for iOS Simulator (no signing)
+        run: |
+          xcodebuild build \
+            -project FFDashPrototype.xcodeproj \
+            -scheme FFDashPrototype \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Package simulator app
+        run: |
+          cd build/Build/Products/Debug-iphonesimulator
+          zip -r FFDashPrototype-simulator.zip FFDashPrototype.app
+
+      - name: Upload simulator build
+        uses: actions/upload-artifact@v4
+        with:
+          name: FFDashPrototype-simulator
+          path: build/Build/Products/Debug-iphonesimulator/FFDashPrototype-simulator.zip
