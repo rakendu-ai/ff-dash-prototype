@@ -35,3 +35,24 @@ jobs:
         with:
           name: FFDashPrototype-simulator
           path: build/Build/Products/Debug-iphonesimulator/FFDashPrototype-simulator.zip
+
+      - name: Build unsigned device app (for Sideloadly)
+        run: |
+          xcodebuild build \
+            -project FFDashPrototype.xcodeproj \
+            -scheme FFDashPrototype \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build-device \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Package unsigned IPA
+        run: |
+          mkdir Payload
+          cp -R build-device/Build/Products/Debug-iphoneos/FFDashPrototype.app Payload/
+          zip -r FFDashPrototype-unsigned.ipa Payload
+
+      - name: Upload unsigned IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: FFDashPrototype-unsigned-ipa
+          path: FFDashPrototype-unsigned.ipa
