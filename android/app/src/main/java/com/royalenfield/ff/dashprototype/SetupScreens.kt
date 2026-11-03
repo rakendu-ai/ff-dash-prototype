@@ -506,3 +506,20 @@ private fun DemoSwitch(label: String, checked: Boolean, onChange: (Boolean) -> U
         Switch(checked = checked, onCheckedChange = onChange)
     }
 }
+
+// A numbered line for the iOS Guided Access steps.
+@Composable
+private fun NumberedStep(number: Int, text: String) {
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Box(
+            Modifier
+                .size(28.dp)
+                .clip(CircleShape)
+                .background(Re.Teal),
+            contentAlignment = Alignment.Center,
+        ) {
+            Text("$number", color = Re.N07, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+        }
+        Text(text, color = Color.White, fontSize = 15.sp)
+    }
+}
