@@ -6,6 +6,7 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.Box as LayoutBox
 
 class MainActivity : ComponentActivity() {
     private val viewModel: CockpitViewModel by viewModels()
@@ -33,6 +35,17 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    // The compass listens only while the screen is in front.
+    override fun onResume() {
+        super.onResume()
+        Heading.start(this)
+    }
+
+    override fun onPause() {
+        Heading.stop()
+        super.onPause()
     }
 }
 
@@ -86,6 +99,11 @@ private fun ScreenRouter(s: CockpitState, live: LiveReadings, vm: CockpitViewMod
         "CM-14" -> ChargingScreen(s, vm)
         "CM-15" -> SummaryScreen(vm)
         "SOS-03" -> CallingScreen(vm)
-        else -> HomeScreen(s, vm, onDemo)
+        else -> Column(Modifier.fillMaxSize()) {
+            LayoutBox(Modifier.weight(1f)) {
+                HomeScreen(s, vm, onDemo)
+            }
+            BottomNav(vm)
+        }
     }
 }

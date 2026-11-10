@@ -22,7 +22,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -219,11 +222,11 @@ fun SwipeAction(label: String, tone: SwipeTone, onComplete: () -> Unit) {
                 },
             contentAlignment = Alignment.Center,
         ) {
-            Text(
-                "»",
-                color = if (tone == SwipeTone.Red) Color.White else Re.N07,
-                fontFamily = AntonFamily,
-                fontSize = 22.sp,
+            Icon(
+                Icons.AutoMirrored.Filled.ArrowForward,
+                contentDescription = null,
+                tint = if (tone == SwipeTone.Red) Color.White else Re.N07,
+                modifier = Modifier.size(26.dp),
             )
         }
     }

@@ -16,6 +16,17 @@
             </intent-filter>
         </activity>
 
+        <!-- Lets Cluster mode read and control the playing music app. The rider grants access once. -->
+        <service
+            android:name=".MediaListener"
+            android:label="FF Dash music"
+            android:exported="true"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
