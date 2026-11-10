@@ -555,7 +555,7 @@ private fun MapPanel(s: CockpitState, vm: CockpitViewModel, withMusic: Boolean) 
                 }
                 drawPath(path, Re.Teal, style = Stroke(width = 7f))
                 drawCircle(Re.Teal, radius = 11f, center = Offset(size.width * 0.35f, size.height * 0.67f))
-                if (s.navCharger) drawCircle(Re.Lime, radius = 10f, center = Offset(size.width * 0.68f, size.height * 0.13f))
+                if (s.navToCharger) drawCircle(Re.Lime, radius = 10f, center = Offset(size.width * 0.68f, size.height * 0.13f))
             }
             Column(
                 Modifier
@@ -568,13 +568,13 @@ private fun MapPanel(s: CockpitState, vm: CockpitViewModel, withMusic: Boolean) 
                     .padding(8.dp),
             ) {
                 Text(
-                    if (s.navCharger) "600 m" else "300 m",
+                    if (s.navToCharger) "600 m" else "300 m",
                     color = Color.White,
                     fontFamily = AntonFamily,
                     fontSize = 24.sp,
                 )
                 Text(
-                    if (s.navCharger) "Turn right · charging point on left" else "Turn right onto ${route.destination ?: "your route"}",
+                    if (s.navToCharger) "Turn right · charging point on left" else "Turn right onto ${route.destination ?: "your route"}",
                     color = Color(0xFFD0D0D0),
                     fontSize = 12.sp,
                 )
@@ -590,9 +590,9 @@ private fun MapPanel(s: CockpitState, vm: CockpitViewModel, withMusic: Boolean) 
                     .padding(horizontal = 12.dp, vertical = 7.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Text("ETA ${if (s.navCharger) "10:51" else "11:08"}", color = Color(0xFFD0D0D0), fontSize = 12.sp)
-                Text("${if (s.navCharger) "3.2" else "18"} km", color = Color(0xFFD0D0D0), fontSize = 12.sp)
-                Text("Arrive with ${if (s.navCharger) "12" else "52"} %", color = Color(0xFFD0D0D0), fontSize = 12.sp)
+                Text("ETA ${if (s.navToCharger) "10:51" else "11:08"}", color = Color(0xFFD0D0D0), fontSize = 12.sp)
+                Text("${if (s.navToCharger) "3.2" else "18"} km", color = Color(0xFFD0D0D0), fontSize = 12.sp)
+                Text("Arrive with ${if (s.navToCharger) "12" else "52"} %", color = Color(0xFFD0D0D0), fontSize = 12.sp)
             }
             if (showDestination) {
                 DestinationSheet(route.destination, route.stops, onPick = {
